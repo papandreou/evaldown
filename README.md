@@ -16,13 +16,17 @@ formats in which to serialise their pretty-printed output.
 We start by introducing an invocation for processing a single
 markdown file:
 
-<pre class="code lang-"><div>npx&nbsp;evaldown&nbsp;./docs/README.md&nbsp;&gt;&nbsp;README.md</div></pre>
+```
+npx evaldown ./docs/README.md > README.md
+```
 
 The file will be processed and the output written to stdout.
 In order to store the output within the source file, thereby
 automatically capturing it, we can use the `--inplace` option:
 
-<pre class="code lang-"><div>npx&nbsp;evaldown&nbsp;--inplace&nbsp;./docs/README.md</div></pre>
+```
+npx evaldown --inplace ./docs/README.md
+```
 
 > All the examples in this section are executable in a checkout of the
 > evaldown repository.
@@ -31,11 +35,15 @@ automatically capturing it, we can use the `--inplace` option:
 
 Processing all the files in a directory looks almost identical:
 
-<pre class="code lang-"><div>npx&nbsp;evaldown&nbsp;--target-path&nbsp;testdata/output&nbsp;testdata/example</div></pre>
+```
+npx evaldown --target-path testdata/output testdata/example
+```
 
 As does applying an update to the source files within a directory:
 
-<pre class="code lang-"><div>npx&nbsp;evaldown&nbsp;--inplace&nbsp;./testdata/example</div></pre>
+```
+npx evaldown --inplace ./testdata/example
+```
 
 ### Working with TypeScript
 
@@ -44,7 +52,9 @@ An explicit path to the `tsconfig.json` file is required from
 which point the project specific compiler is detected and used
 to transpile snippets:
 
-<pre class="code lang-"><div>npx&nbsp;evaldown&nbsp;--tsconfig-path&nbsp;./testdata/typescript/tsconfig.json&nbsp;./testdata/typescript/example.md</div></pre>
+```
+npx evaldown --tsconfig-path ./testdata/typescript/tsconfig.json ./testdata/typescript/example.md
+```
 
 ### Beyond command line options
 
@@ -53,9 +63,13 @@ The tool supports many additional options to alter its behaviour.
 Typically, the tool would be installed via a dependency via npm
 and any options will be read directly from a configuration file:
 
-<pre class="code lang-"><div>npm&nbsp;install&nbsp;--save-dev&nbsp;evaldown</div></pre>
+```
+npm install --save-dev evaldown
+```
 
-<pre class="code lang-"><div>./node_modules/.bin/evaldown&nbsp;--config&nbsp;&lt;path_to_config&gt;</div></pre>
+```
+./node_modules/.bin/evaldown --config <path_to_config>
+```
 
 The sections below discuss configuring the tool and
 authoring of examples.
@@ -71,7 +85,12 @@ A basic `evaldown.conf.js` file is as follows:
 
 <!-- evaldown evaluate:false -->
 
-<pre class="code lang-javascript"><div>module<span style="color: #999">.</span>exports&nbsp;<span style="color: #a67f59">=</span>&nbsp;<span style="color: #999">{</span></div><div>&nbsp;&nbsp;sourcePath<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;./input&quot;</span><span style="color: #999">,</span></div><div>&nbsp;&nbsp;targetPath<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;./output&quot;</span></div><div><span style="color: #999">};</span></div></pre>
+```javascript
+module.exports = {
+  sourcePath: "./input",
+  targetPath: "./output"
+};
+```
 
 ### Output format and extension
 
@@ -88,7 +107,13 @@ replaced with static HTML that inlines all the colouring information.
 
 <!-- evaldown evaluate:false -->
 
-<pre class="code lang-javascript"><div>module<span style="color: #999">.</span>exports&nbsp;<span style="color: #a67f59">=</span>&nbsp;<span style="color: #999">{</span></div><div>&nbsp;&nbsp;outputFormat<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;inlined&quot;</span><span style="color: #999">,</span></div><div>&nbsp;&nbsp;sourcePath<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;./input&quot;</span><span style="color: #999">,</span></div><div>&nbsp;&nbsp;targetPath<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;./output&quot;</span></div><div><span style="color: #999">};</span></div></pre>
+```javascript
+module.exports = {
+  outputFormat: "inlined",
+  sourcePath: "./input",
+  targetPath: "./output"
+};
+```
 
 #### `"markdown"`
 
@@ -97,7 +122,13 @@ replaced with text (for use when external highlighting is desired).
 
 <!-- evaldown evaluate:false -->
 
-<pre class="code lang-javascript"><div>module<span style="color: #999">.</span>exports&nbsp;<span style="color: #a67f59">=</span>&nbsp;<span style="color: #999">{</span></div><div>&nbsp;&nbsp;outputFormat<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;markdown&quot;</span><span style="color: #999">,</span></div><div>&nbsp;&nbsp;sourcePath<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;./input&quot;</span><span style="color: #999">,</span></div><div>&nbsp;&nbsp;targetPath<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;./output&quot;</span></div><div><span style="color: #999">};</span></div></pre>
+```javascript
+module.exports = {
+  outputFormat: "markdown",
+  sourcePath: "./input",
+  targetPath: "./output"
+};
+```
 
 ### Capturing evaluation results from the console
 
@@ -115,7 +146,13 @@ key with a value of `"console"` to the configuration object:
 
 <!-- evaldown evaluate:false -->
 
-<pre class="code lang-javascript"><div>module<span style="color: #999">.</span>exports&nbsp;<span style="color: #a67f59">=</span>&nbsp;<span style="color: #999">{</span></div><div>&nbsp;&nbsp;outputCapture<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;console&quot;</span><span style="color: #999">,</span></div><div>&nbsp;&nbsp;sourcePath<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;./input&quot;</span><span style="color: #999">,</span></div><div>&nbsp;&nbsp;targetPath<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;./output&quot;</span></div><div><span style="color: #999">};</span></div></pre>
+```javascript
+module.exports = {
+  outputCapture: "console",
+  sourcePath: "./input",
+  targetPath: "./output"
+};
+```
 
 ### Keeping the source up-to-date
 
@@ -125,7 +162,9 @@ enabled by default via the configuration file:
 
 It can also be activaited on the command line on demand:
 
-<pre class="code lang-"><div>./node_modules/.bin/evaldown&nbsp;--config&nbsp;&lt;path_to_config&gt;&nbsp;--update</div></pre>
+```
+./node_modules/.bin/evaldown --config <path_to_config> --update
+```
 
 ## Authoring
 
@@ -154,9 +193,18 @@ return doSomething();
 
 When they are rendered, the output will look something like:
 
-<pre class="code lang-javascript"><div><span style="color: #07a">function</span>&nbsp;<span style="color: #DD4A68">doSomething</span><span style="color: #999">()</span>&nbsp;<span style="color: #999">{</span></div><div>&nbsp;&nbsp;<span style="color: #07a">return</span>&nbsp;<span style="color: #999">{</span>&nbsp;foo<span style="color: #a67f59">:</span>&nbsp;<span style="color: #690">&quot;bar&quot;</span>&nbsp;<span style="color: #999">};</span></div><div><span style="color: #999">}</span></div><div>&nbsp;</div><div><span style="color: #708090">//&nbsp;objects&nbsp;are&nbsp;inspected&nbsp;too</span></div><div><span style="color: #07a">return</span>&nbsp;<span style="color: #DD4A68">doSomething</span><span style="color: #999">();</span></div></pre>
+```javascript
+function doSomething() {
+  return { foo: "bar" };
+}
 
-<pre class="output"><div>{&nbsp;<span style="color: #555">foo</span>:&nbsp;<span style="color: #df5000">'bar'</span>&nbsp;}</div></pre>
+// objects are inspected too
+return doSomething();
+```
+
+```output
+{ foo: 'bar' }
+```
 
 ### Customising snippets
 
